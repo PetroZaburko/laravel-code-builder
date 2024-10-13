@@ -35,7 +35,7 @@ final class FormBuilder extends AbstractBuilder implements FormBuilderContract
         $result = "";
 
         foreach ($this->codeStructure->columns() as $column) {
-            if(
+            if (
                 in_array($column->column(), $this->codeStructure->dateColumns())
                 || in_array($column->type(), $this->codeStructure->noInputType())
                 || $column->isId()

@@ -66,7 +66,7 @@ class LaravelCodeBuildCommand extends Command
     protected function codeStructures(): array
     {
         $tableStr = $this->argument('table') ?? '';
-        if(is_array($tableStr)) {
+        if (is_array($tableStr)) {
             throw new CodeGenerateCommandException('The table argument must not be an array');
         }
 
@@ -79,22 +79,22 @@ class LaravelCodeBuildCommand extends Command
         );
 
         $confirmBelongsTo = config('code_builder.belongs_to');
-        if(is_null($confirmBelongsTo)) {
+        if (is_null($confirmBelongsTo)) {
             $confirmBelongsTo = confirm("Generate BelongsTo relations from foreign keys?");
         }
 
         $hasMany = $this->option('has-many');
-        if(! is_array($hasMany)) {
+        if (! is_array($hasMany)) {
             throw new CodeGenerateCommandException('The has-many option must be an array');
         }
 
         $hasOne = $this->option('has-one');
-        if(! is_array($hasOne)) {
+        if (! is_array($hasOne)) {
             throw new CodeGenerateCommandException('The has-one option must be an array');
         }
 
         $belongsToMany = $this->option('belongs-to-many');
-        if(! is_array($belongsToMany)) {
+        if (! is_array($belongsToMany)) {
             throw new CodeGenerateCommandException('The belongs-to-many option must be an array');
         }
 
@@ -147,16 +147,16 @@ class LaravelCodeBuildCommand extends Command
         );
 
         foreach ($this->builders as $builder) {
-            if(! $builder instanceof BuildTypeContract) {
+            if (! $builder instanceof BuildTypeContract) {
                 throw new CodeGenerateCommandException('builder is not DevLnk\LaravelCodeBuilder\Enums\BuildTypeContract');
             }
 
             $confirmed = true;
-            if(isset($this->replaceCautions[$builder->value()])) {
+            if (isset($this->replaceCautions[$builder->value()])) {
                 $confirmed = confirm($this->replaceCautions[$builder->value()]);
             }
 
-            if(! $confirmed) {
+            if (! $confirmed) {
                 continue;
             }
 
@@ -177,7 +177,7 @@ class LaravelCodeBuildCommand extends Command
     protected function setEntity(): void
     {
         $entity = $this->argument('entity');
-        if(is_array($entity)) {
+        if (is_array($entity)) {
             throw new CodeGenerateCommandException('The entity argument must not be an array');
         }
         $this->entity = $entity;
@@ -188,20 +188,20 @@ class LaravelCodeBuildCommand extends Command
         $builders = $this->builders();
 
         foreach ($builders as $builder) {
-            if($this->option($builder->value())) {
+            if ($this->option($builder->value())) {
                 $this->builders[] = $builder;
             }
         }
 
-        if($this->option('builders')) {
+        if ($this->option('builders')) {
             foreach ($this->configBuilders() as $builder) {
-                if(! in_array($builder, $this->builders)) {
+                if (! in_array($builder, $this->builders)) {
                     $this->builders[] = $builder;
                 }
             }
         }
 
-        if(empty($this->builders)) {
+        if (empty($this->builders)) {
             $this->builders = $this->configBuilders();
         }
     }
@@ -212,9 +212,9 @@ class LaravelCodeBuildCommand extends Command
 
         $fileSystem = new Filesystem();
 
-        if($isGenerationDir) {
+        if ($isGenerationDir) {
             $genPath = base_path($generationPath);
-            if(! $fileSystem->isDirectory($genPath)) {
+            if (! $fileSystem->isDirectory($genPath)) {
                 $fileSystem->makeDirectory($genPath, recursive: true);
                 $fileSystem->put($genPath . '/.gitignore', "*\n!.gitignore");
             }
@@ -222,9 +222,9 @@ class LaravelCodeBuildCommand extends Command
 
         $codePath->initPaths($codeStructure, $generationPath, $isGenerationDir);
 
-        if(! $isGenerationDir) {
+        if (! $isGenerationDir) {
             foreach ($this->builders as $buildType) {
-                if($fileSystem->isFile($codePath->path($buildType->value())->file())) {
+                if ($fileSystem->isFile($codePath->path($buildType->value())->file())) {
                     $this->replaceCautions[$buildType->value()] =
                         $this->projectFileName($codePath->path($buildType->value())->file()) . " already exists, are you sure you want to replace it?";
                 }
@@ -280,11 +280,11 @@ class LaravelCodeBuildCommand extends Command
 
     protected function projectFileName(string $filePath): string
     {
-        if(str_contains($filePath, '/resources/views')) {
+        if (str_contains($filePath, '/resources/views')) {
             return substr($filePath, strpos($filePath, '/resources/views') + 1);
         }
 
-        if(str_contains($filePath, '/routes')) {
+        if (str_contains($filePath, '/routes')) {
             return substr($filePath, strpos($filePath, '/routes') + 1);
         }
 

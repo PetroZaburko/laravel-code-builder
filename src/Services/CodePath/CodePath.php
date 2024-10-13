@@ -111,7 +111,7 @@ class CodePath implements CodePathContract
 
     public function setPath(AbstractPathItem $path): self
     {
-        if(isset($this->paths[$path->getBuildAlias()])) {
+        if (isset($this->paths[$path->getBuildAlias()])) {
             return $this;
         }
         $this->paths[$path->getBuildAlias()] = $path;

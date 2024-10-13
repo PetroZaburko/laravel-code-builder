@@ -18,14 +18,14 @@ trait SortColumnsFromDefaultValue
      */
     private function sortColumnsFromDefaultValue(): array
     {
-        if(is_array($this->sortColumns)) {
+        if (is_array($this->sortColumns)) {
             return $this->sortColumns;
         }
 
         $searchColumns = $this->codeStructure->columns();
 
         foreach ($searchColumns as $key => $column) {
-            if(is_null($column->default())
+            if (is_null($column->default())
                 && ! $column->nullable()
                 && ! in_array($column->column(), $this->codeStructure->dateColumns())
             ) {
@@ -35,7 +35,7 @@ trait SortColumnsFromDefaultValue
         }
 
         foreach ($searchColumns as $key => $column) {
-            if(
+            if (
                 (! is_null($column->default()) || $column->nullable())
                 && ! in_array($column->column(), $this->codeStructure->dateColumns())
             ) {
@@ -45,13 +45,13 @@ trait SortColumnsFromDefaultValue
         }
 
         foreach ($searchColumns as $key => $column) {
-            if(in_array($column->column(), $this->codeStructure->dateColumns())) {
+            if (in_array($column->column(), $this->codeStructure->dateColumns())) {
                 $this->sortColumns[] = $column;
                 unset($searchColumns[$key]);
             }
         }
 
-        if(! empty($searchColumns)) {
+        if (! empty($searchColumns)) {
             foreach ($searchColumns as $column) {
                 $this->sortColumns[] = $column;
             }

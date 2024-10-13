@@ -22,7 +22,7 @@ final class ColumnStructure
         private readonly ?string $default,
         private readonly bool $nullable
     ) {
-        if(empty($this->name)) {
+        if (empty($this->name)) {
             $this->name = str($this->column)->camel()->ucfirst()->value();
         }
 
@@ -56,11 +56,11 @@ final class ColumnStructure
 
     public function defaultInStub(): ?string
     {
-        if(! is_null($this->default) && $this->phpType() === 'string') {
+        if (! is_null($this->default) && $this->phpType() === 'string') {
             return "'" . trim($this->default, "'") . "'";
         }
 
-        if(
+        if (
             ! is_null($this->default)
             && ($this->phpType() === 'float' || $this->phpType() === 'int')
         ) {
@@ -112,15 +112,15 @@ final class ColumnStructure
 
     public function rulesType(): ?string
     {
-        if($this->inputType === 'number') {
+        if ($this->inputType === 'number') {
             return 'int';
         }
 
-        if($this->inputType === 'text') {
+        if ($this->inputType === 'text') {
             return 'string';
         }
 
-        if($this->inputType === 'checkbox') {
+        if ($this->inputType === 'checkbox') {
             return 'accepted';
         }
 
@@ -129,18 +129,18 @@ final class ColumnStructure
 
     public function phpType(): ?string
     {
-        if(
+        if (
             $this->type() === SqlTypeMap::HAS_MANY
             || $this->type() === SqlTypeMap::BELONGS_TO_MANY
         ) {
             return 'array';
         }
 
-        if($this->type() === SqlTypeMap::HAS_ONE) {
+        if ($this->type() === SqlTypeMap::HAS_ONE) {
             return $this->relation()?->table()->ucFirstSingular() . 'DTO';
         }
 
-        if(
+        if (
             $this->inputType === 'text'
             || $this->inputType === 'email'
             || $this->inputType === 'password'
@@ -148,11 +148,11 @@ final class ColumnStructure
             return 'string';
         }
 
-        if($this->type() === SqlTypeMap::BOOLEAN) {
+        if ($this->type() === SqlTypeMap::BOOLEAN) {
             return 'bool';
         }
 
-        if(
+        if (
             $this->type() === SqlTypeMap::DECIMAL
             || $this->type() === SqlTypeMap::DOUBLE
             || $this->type() === SqlTypeMap::FLOAT
@@ -160,7 +160,7 @@ final class ColumnStructure
             return 'float';
         }
 
-        if($this->inputType === 'number') {
+        if ($this->inputType === 'number') {
             return 'int';
         }
 
@@ -169,11 +169,11 @@ final class ColumnStructure
 
     public function setInputType(): void
     {
-        if(! is_null($this->inputType)) {
+        if (! is_null($this->inputType)) {
             return;
         }
 
-        if($this->column === 'email' || $this->column === 'password') {
+        if ($this->column === 'email' || $this->column === 'password') {
             $this->inputType = $this->column;
 
             return;

@@ -88,7 +88,7 @@ class DTOBuilder extends AbstractBuilder implements DTOBuilderContract
         $result = "";
 
         foreach ($this->sortColumnsFromDefaultValue() as $column) {
-            if(
+            if (
                 in_array($column->column(), $this->codeStructure->dateColumns())
                 || in_array($column->type(), $this->codeStructure->noInputType())
             ) {

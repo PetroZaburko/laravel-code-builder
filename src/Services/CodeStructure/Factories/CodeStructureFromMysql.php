@@ -26,7 +26,7 @@ final class CodeStructureFromMysql
 
         $primaryKey = 'id';
         foreach ($indexes as $index) {
-            if($index['name'] === 'primary') {
+            if ($index['name'] === 'primary') {
                 $primaryKey = $index['columns'][0];
 
                 break;
@@ -95,7 +95,7 @@ final class CodeStructureFromMysql
                 nullable: $column['nullable'],
             );
 
-            if($isBelongsTo && isset($foreignList[$column['name']])) {
+            if ($isBelongsTo && isset($foreignList[$column['name']])) {
                 $columnStructure->setRelation(new RelationStructure(
                     $foreignList[$column['name']]['foreign_column'],
                     $foreignList[$column['name']]['table']
